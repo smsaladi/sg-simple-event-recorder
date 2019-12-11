@@ -1,0 +1,7 @@
+requests
+flask
+flask_sqlalchemy
+pymysql
+python-dotenv
+gunicorn
+
