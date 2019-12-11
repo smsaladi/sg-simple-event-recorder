@@ -70,21 +70,22 @@ def home():
     if not request.json:
         return ""
 
-    # fix name mangling
-    if 'smtp-id' in request.json.keys():
-        request.json['smtp_id'] = request.json.pop('smtp-id')
-    
-    # collect keys not in model
-    other = {}
-    for k in list(request.json.keys()):
-        if k not in event_keys:
-            other[k] = str(request.json.pop(k))
+    for item in request.json:
+        # fix name mangling
+        if 'smtp-id' in item.keys():
+            item['smtp_id'] = item.pop('smtp-id')
+        
+        # collect keys not in model
+        other = {}
+        for k in list(item.keys()):
+            if k not in event_keys:
+                other[k] = str(item.pop(k))
 
-    obj = Event(**request.json)
-    obj.other = other
+        obj = Event(**item)
+        obj.other = other
 
-    db.session.merge(obj)
-    db.session.commit()
+        db.session.merge(obj)
+        db.session.commit()
 
     return ""
 

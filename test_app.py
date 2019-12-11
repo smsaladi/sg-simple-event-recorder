@@ -65,7 +65,7 @@ def test_data(client):
         os.environ['POST_PASSWORD'])
     }
     for data in sample_data:
-        res = client.post("/", headers=headers, json=data)
+        res = client.post("/", headers=headers, json=[data])
         with app.app_context():
             obj = Event.query.all()[0]
             obj_keys = obj.__dict__.keys()
